@@ -2,6 +2,7 @@ package com.shanmu.assessment.database.entities;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class BaseEntity {
     @Id
     @GeneratedValue

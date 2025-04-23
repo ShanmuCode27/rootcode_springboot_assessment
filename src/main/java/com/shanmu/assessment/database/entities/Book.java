@@ -15,7 +15,7 @@ public class Book extends BaseEntity {
     private String title;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private User author;
+    private User author; // Assumption: Author has multiple books, each book is written by a single author
     private Date publishedYear;
     private Long availableCopies;
 }
