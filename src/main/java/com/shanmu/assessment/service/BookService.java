@@ -1,13 +1,11 @@
 package com.shanmu.assessment.service;
 
 import com.shanmu.assessment.database.entities.Book;
-import com.shanmu.assessment.database.entities.User;
 import com.shanmu.assessment.database.repositories.BookRepository;
 import com.shanmu.assessment.dto.books.BookDto;
 import com.shanmu.assessment.dto.books.GetBookDto;
 import com.shanmu.assessment.dto.filters.BookFilterDto;
 import com.shanmu.assessment.dto.filters.PaginatedResponse;
-import com.shanmu.assessment.dto.users.GetUserDto;
 import com.shanmu.assessment.service.interfaces.IBookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -86,6 +84,7 @@ public class BookService implements IBookService {
         return true; //TODO: fix
     }
 
+    @Override
     public PaginatedResponse<GetBookDto> searchBooks(BookFilterDto filter, int page, int size) {
         Pageable pageable = PageRequest.of(
                 page,
@@ -100,12 +99,29 @@ public class BookService implements IBookService {
                 pageable
         );
 
-        // Map books to DTOs
         List<GetBookDto> bookDtos = books.stream()
                 .map(book -> modelMapper.map(book, GetBookDto.class))
                 .toList();
 
-        PaginatedResponse<GetBookDto> response = new PaginatedResponse<>();
+        PaginatedResponse<GetBookDto> response = new PaginatedResponse();
+        response.setData(bookDtos);
+        response.setTotalItems((int)books.getTotalElements());
+        response.setCurrentPage(page);
+        response.setTotalPages(books.getTotalPages());
+
+        return response;
+    }
+
+    @Override
+    public PaginatedResponse<GetBookDto> getPaginatedBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Book> books = bookRepository.findAll(pageable);
+        List<GetBookDto> bookDtos = books.stream()
+                .map(book -> modelMapper.map(book, GetBookDto.class))
+                .toList();
+
+        PaginatedResponse<GetBookDto> response = new PaginatedResponse();
         response.setData(bookDtos);
         response.setTotalItems((int)books.getTotalElements());
         response.setCurrentPage(page);

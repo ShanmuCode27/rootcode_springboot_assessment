@@ -1,12 +1,15 @@
 package com.shanmu.assessment.controller;
 
+import com.shanmu.assessment.dto.auth.LoginRequestDto;
 import com.shanmu.assessment.dto.users.GetUserDto;
 import com.shanmu.assessment.dto.users.RegisterUserDto;
 import com.shanmu.assessment.dto.users.UpdateUserDto;
 import com.shanmu.assessment.service.interfaces.IUserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "users")
@@ -23,6 +26,8 @@ public class UserController {
     public List<GetUserDto> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    //TODO: paginated list
 
     @GetMapping(path = "{id}")
     public GetUserDto getUserById(@PathVariable Long id) {

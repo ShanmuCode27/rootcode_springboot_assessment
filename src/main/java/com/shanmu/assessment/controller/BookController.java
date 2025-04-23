@@ -23,6 +23,14 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/paginated")
+    public PaginatedResponse<GetBookDto> getAllBooksPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return bookService.getPaginatedBooks(page, size);
+    }
+
     @GetMapping(path = "{id}")
     public GetBookDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);

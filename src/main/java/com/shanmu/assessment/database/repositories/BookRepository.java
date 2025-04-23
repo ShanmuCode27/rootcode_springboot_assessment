@@ -22,4 +22,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             @Param("publishedYear") Integer publishedYear,
             Pageable pageable
     );
+
+    Page<Book> findAll(Pageable pageable);
 }

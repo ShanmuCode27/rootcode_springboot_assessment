@@ -1,8 +1,7 @@
 package com.shanmu.assessment.database.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.shanmu.assessment.enums.Role;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -16,6 +15,10 @@ public class User extends BaseEntity {
     private String name;
     @NonNull
     private String email;
+    @NonNull
+    private String password;
     @OneToMany(mappedBy = "author")
     private List<Book> books;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

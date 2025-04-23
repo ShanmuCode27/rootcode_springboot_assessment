@@ -17,4 +17,5 @@ public interface IBookService {
     GetBookDto updateBook(BookDto bookDto, Long id);
     boolean deleteBook(Long id);
     PaginatedResponse<GetBookDto> searchBooks(BookFilterDto filter, int page, int size);
+    PaginatedResponse<GetBookDto> getPaginatedBooks(int page, int size);
 }
