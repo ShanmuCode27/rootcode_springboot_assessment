@@ -15,7 +15,7 @@ import java.util.Date;
 public class GetBookDto {
     private Long id;
     private String title;
-    private GetAuthorDto author;
+    private GetAuthorDto author; // Assumption: On update the author is updatable, but could be forbidden if required
     private Date publishedYear;
     private Long availableCopies;
 }

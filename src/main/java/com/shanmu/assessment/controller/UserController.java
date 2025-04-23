@@ -34,7 +34,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping
+    @PostMapping(path = "/register")
     public GetUserDto registerUser(@RequestBody RegisterUserDto registerUserDto) {
         return userService.registerUser(registerUserDto);
     }
