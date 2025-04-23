@@ -69,6 +69,14 @@ public class UserService implements IUserService {
 
     @Override
     public boolean deleteUser(Long id) {
-        return false;
+        Optional<User> dbUser = userRepository.findById(id);
+
+        if (dbUser.isEmpty()) {
+            // TODO
+        }
+        User existingUser = dbUser.get();
+        userRepository.delete(existingUser);
+
+        return true; //TODO: fix
     }
 }

@@ -17,6 +17,8 @@ public class UserController {
         this.userService = userService;
     }
 
+    // TODO: implement login for user
+
     @GetMapping
     public List<GetUserDto> getAllUsers() {
         return userService.getAllUsers();
