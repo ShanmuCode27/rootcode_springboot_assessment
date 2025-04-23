@@ -5,6 +5,7 @@ import com.shanmu.assessment.dto.books.GetBookDto;
 import com.shanmu.assessment.dto.filters.BookFilterDto;
 import com.shanmu.assessment.dto.filters.PaginatedResponse;
 import com.shanmu.assessment.service.interfaces.IBookService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,16 +37,19 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+    @SecurityRequirement(name = "Authorization")
     @PostMapping
     public GetBookDto addBook(@RequestBody BookDto bookDto) {
         return bookService.addBook(bookDto);
     }
 
+    @SecurityRequirement(name = "Authorization")
     @PutMapping(path = "{id}")
     public GetBookDto updateBook(@RequestBody BookDto bookDto, @PathVariable Long id) {
         return bookService.updateBook(bookDto, id);
     }
 
+    @SecurityRequirement(name = "Authorization")
     @DeleteMapping(path = "{id}")
     public boolean deleteBook(@PathVariable Long id) {
         return bookService.deleteBook(id);

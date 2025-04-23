@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,10 +19,12 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -61,7 +64,14 @@ public class UserService implements IUserService {
 
     @Override
     public GetUserDto registerUser(RegisterUserDto registerUserDto) {
+        Optional<User> existingUser = userRepository.findByEmail(registerUserDto.getEmail());
+
+        if (existingUser.isPresent()) {
+            //TODO: handle issue
+        }
+
         User user = modelMapper.map(registerUserDto, User.class);
+        user.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         User dbUser =  userRepository.save(user);
 
         return modelMapper.map(dbUser, GetUserDto.class);

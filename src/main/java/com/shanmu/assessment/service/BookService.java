@@ -1,7 +1,9 @@
 package com.shanmu.assessment.service;
 
 import com.shanmu.assessment.database.entities.Book;
+import com.shanmu.assessment.database.entities.User;
 import com.shanmu.assessment.database.repositories.BookRepository;
+import com.shanmu.assessment.database.repositories.UserRepository;
 import com.shanmu.assessment.dto.books.BookDto;
 import com.shanmu.assessment.dto.books.GetBookDto;
 import com.shanmu.assessment.dto.filters.BookFilterDto;
@@ -20,16 +22,24 @@ import java.util.Optional;
 @Service
 public class BookService implements IBookService {
     private final BookRepository bookRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
+    public BookService(BookRepository bookRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.bookRepository = bookRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
     public GetBookDto addBook(BookDto bookDto) {
+        Optional<User> author = userRepository.findById(bookDto.getAuthorId());
+        if (author.isEmpty()) {
+            // TODO: handle
+        }
+
         Book book = modelMapper.map(bookDto, Book.class);
+        author.ifPresent(book::setAuthor);
         Book savedBook = bookRepository.save(book);
 
         return modelMapper.map(savedBook, GetBookDto.class);

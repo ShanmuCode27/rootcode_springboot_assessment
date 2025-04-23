@@ -14,7 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     SELECT b FROM Book b
     WHERE (:authorId IS NULL OR b.author.id = :authorId)
       AND (:authorName IS NULL OR LOWER(b.author.name) LIKE LOWER(CONCAT('%', :authorName, '%')))
-      AND (:publishedYear IS NULL OR FUNCTION('year', b.publishedYear) = :publishedYear)
+      AND (:publishedYear IS NULL OR YEAR(b.publishedYear) = :publishedYear)
 """)
     Page<Book> findBooksByFilters(
             @Param("authorId") Long authorId,
