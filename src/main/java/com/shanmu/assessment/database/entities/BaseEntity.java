@@ -11,7 +11,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id

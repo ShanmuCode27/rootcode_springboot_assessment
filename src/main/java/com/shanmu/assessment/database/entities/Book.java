@@ -1,9 +1,6 @@
 package com.shanmu.assessment.database.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,7 +10,7 @@ import java.util.Date;
 @Table(name = "books")
 public class Book extends BaseEntity {
     private String title;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User author; // Assumption: Author has multiple books, each book is written by a single author
     private Date publishedYear;
